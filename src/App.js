@@ -1,24 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  let [fileURL, setFileURL] = useState(null);
+  let [fileName, setFileName] = useState(null);
+
+  const handleChange = item => {
+    const uploadedFile = item.nativeEvent.target.files[0];
+    const reader = new FileReader();
+    reader.readAsText(uploadedFile);
+
+    reader.onload = function() {
+      const blob = new Blob(
+        [
+          `${reader.result}
+          \n Name: ${uploadedFile.name};
+          \n Size: ${uploadedFile.size} bites;
+          \n Last Modified: ${uploadedFile.lastModifiedDate};`
+        ],
+        { type: 'text/plain' }
+      );
+      const url = URL.createObjectURL(blob);
+      setFileURL(url);
+      setFileName(uploadedFile.name);
+    };
+
+    reader.onerror = function() {
+      console.log(reader.error);
+    };
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="inputDiv">
+        <input
+          type="file"
+          id="file"
+          onChange={handleChange}
+          className="inputfile"
+        ></input>
+        <label htmlFor="file">
+          {fileName ? 'File selected' : 'Choose a file...'}
+        </label>
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={fileURL}
+          download={`${fileName}`}
+          className={fileName ? 'btn' : 'hidden'}
         >
-          Learn React
+          Download file
         </a>
-      </header>
+      </div>
     </div>
   );
 }

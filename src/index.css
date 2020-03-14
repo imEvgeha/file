@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.inputDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 500px;
+  width: 500px;
+  background-color: rgb(223, 223, 223);
+  border-radius: 10px;
+}
+
+.btn {
+  margin: 20px;
+  padding: 5px;
+  border-radius: 4px;
+  color: black;
+  background-color: snow;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+label {
+  font-weight: 600;
+}
